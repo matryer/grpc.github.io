@@ -222,6 +222,7 @@ func (s *routeGuideServer) RouteChat(stream pb.RouteGuide_RouteChatServer) error
 ```
 
 #### Simple RPC
+
 `routeGuideServer` implements all our service methods. Let's look at the
 simplest type first, `GetFeature`, which just gets a `Point` from the client and
 returns the corresponding feature information from its database in a `Feature`.
@@ -245,7 +246,9 @@ with the appropriate information, and then `return` it along with an `nil` error
 to tell gRPC that we've finished dealing with the RPC and that the `Feature` can
 be returned to the client.
 
-#### Server-side streaming RPC Now let's look at one of our streaming RPCs.
+#### Server-side streaming RPC
+
+Now let's look at one of our streaming RPCs.
 `ListFeatures` is a server-side streaming RPC, so we need to send back multiple
 `Feature`s to our client.
 
@@ -274,8 +277,10 @@ finished writing responses. Should any error happen in this call, we return a
 non-`nil` error; the gRPC layer will translate it into an appropriate RPC status
 to be sent on the wire.
 
-#### Client-side streaming RPC Now let's look at something a little more
-complicated: the client-side streaming method `RecordRoute`, where we get a
+#### Client-side streaming RPC
+
+Now let's look at something a little more complicated: the client-side streaming 
+method `RecordRoute`, where we get a
 stream of `Point`s from the client and return a single `RouteSummary` with
 information about their trip. As you can see, this time the method doesn't have
 a request parameter at all. Instead, it gets a `RouteGuide_RecordRouteServer`
@@ -326,6 +331,7 @@ we return the error "as is" so that it'll be translated to an RPC status by the
 gRPC layer.
 
 #### Bidirectional streaming RPC
+
 Finally, let's look at our bidirectional streaming RPC `RouteChat()`.
 
 ```go
